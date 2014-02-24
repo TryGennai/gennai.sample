@@ -1,0 +1,76 @@
+FROM (
+  RequestPacket JOIN ResponsePacket
+  ON RequestPacket.request_pheader.Destination_Port = ResponsePacket.response_pheader.Source_Port
+  AND RequestPacket.request_pheader.Source_Port = ResponsePacket.response_pheader.Destination_Port
+  AND RequestPacket.request_pheader.Destination_Ip = ResponsePacket.response_pheader.Source_Ip
+  AND RequestPacket.request_pheader.Source_Ip = ResponsePacket.response_pheader.Destination_Ip
+  TO
+    RequestPacket.request_properties AS request_properties,
+    RequestPacket._time AS request_time,
+    ResponsePacket.response_properties AS response_properties,
+    ResponsePacket._time AS response_time
+) AS packet USING kafka_spout()
+EACH
+  request_properties.Host AS host, 
+  request_properties.Request_URI AS uri,
+  response_properties.Status AS status,
+  request_time,
+  response_time
+INTO s1
+;
+FROM s1
+EACH *, ifnull(record, 'cnt_all') AS record, count() AS cnt
+LIMIT FIRST EVERY 1min
+EMIT record, cnt, request_time, response_time USING mongo_persist('front', 'test', ['record'])
+;
+FROM s1
+EACH *, ifnull(record, 'cnt_all_time') AS record
+SLIDE LENGTH 5min BY response_time count() AS cnt, record, request_time, response_time
+LIMIT FIRST EVERY 1min
+EMIT record, cnt, request_time, response_time USING mongo_persist('front', 'test', ['record'])
+;
+FROM s1
+BEGIN GROUP BY host
+INTO s2
+;
+FROM s2
+EACH *, ifnull(record, 'cnt_host') AS record, count() AS cnt
+LIMIT FIRST EVERY 1min
+EMIT record, cnt, host, request_time, response_time USING mongo_persist('front', 'test', ['record', 'host'])
+;
+FROM s2
+EACH *, ifnull(record, 'cnt_host_time') AS record
+SLIDE LENGTH 5min BY response_time count() AS cnt, record, host, request_time, response_time
+LIMIT FIRST EVERY 1min
+EMIT record, cnt, host, request_time, response_time USING mongo_persist('front', 'test', ['record', 'host'])
+;
+FROM s2
+BEGIN GROUP BY uri
+INTO s3
+;
+FROM s3
+EACH *, ifnull(record, 'cnt_uri') AS record, count() AS cnt
+LIMIT FIRST EVERY 1min
+EMIT record, cnt, host, uri, request_time, response_time USING mongo_persist('front', 'test', ['record', 'host', 'uri'])
+;
+FROM s3
+EACH *, ifnull(record, 'cnt_uri_time') AS record
+SLIDE LENGTH 5min BY response_time count() AS cnt, record, host, uri, request_time, response_time
+LIMIT FIRST EVERY 1min
+EMIT record, cnt, host, uri, request_time, response_time USING mongo_persist('front', 'test', ['record', 'host', 'uri'])
+;
+FROM s3
+BEGIN GROUP BY status
+INTO s4
+;
+FROM s4
+EACH *, ifnull(record, 'cnt_status') AS record, count() AS cnt
+LIMIT FIRST EVERY 1min
+EMIT record, cnt, host, uri, status, request_time, response_time USING mongo_persist('front', 'test', ['record', 'host', 'uri', 'status'])
+;
+FROM s4
+EACH *, ifnull(record, 'cnt_status_time') AS record
+SLIDE LENGTH 5min BY response_time count() AS cnt, record, host, uri, status, request_time, response_time
+LIMIT FIRST EVERY 1min
+EMIT record, cnt, host, uri, status, request_time, response_time USING mongo_persist('front', 'test', ['record', 'host', 'uri', 'status'])
+;
