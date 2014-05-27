@@ -21,13 +21,13 @@ INTO s1
 FROM s1
 EACH *, ifnull(record, 'cnt_all') AS record, count() AS cnt
 LIMIT FIRST EVERY 1min
-EMIT record, cnt, request_time, response_time USING mongo_persist('front', 'test', ['record'])
+EMIT record, cnt, request_time, response_time USING mongo_persist('front', 'output', ['record'])
 ;
 FROM s1
 EACH *, ifnull(record, 'cnt_all_time') AS record
 SLIDE LENGTH 5min BY response_time count() AS cnt, record, request_time, response_time
 LIMIT FIRST EVERY 1min
-EMIT record, cnt, request_time, response_time USING mongo_persist('front', 'test', ['record'])
+EMIT record, cnt, request_time, response_time USING mongo_persist('front', 'output', ['record'])
 ;
 FROM s1
 JOIN service ON service.host = host TO service.sid AS sid EXPIRE 10min USING mongo_fetch('front', 'service')
@@ -46,13 +46,13 @@ INTO s3
 FROM s3
 EACH *, ifnull(record, 'cnt_sid') AS record, count() AS cnt
 LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, request_time, response_time USING mongo_persist('front', 'test', ['record', 'sid'])
+EMIT record, cnt, sid, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid'])
 ;
 FROM s3
 EACH *, ifnull(record, 'cnt_sid_time') AS record
 SLIDE LENGTH 5min BY response_time count() AS cnt, record, sid, request_time, response_time
 LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, request_time, response_time USING mongo_persist('front', 'test', ['record', 'sid'])
+EMIT record, cnt, sid, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid'])
 ;
 FROM s3
 BEGIN GROUP BY host
@@ -61,13 +61,13 @@ INTO s4
 FROM s4
 EACH *, ifnull(record, 'cnt_host') AS record, count() AS cnt
 LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, host, request_time, response_time USING mongo_persist('front', 'test', ['record', 'sid', 'host'])
+EMIT record, cnt, sid, host, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host'])
 ;
 FROM s4
 EACH *, ifnull(record, 'cnt_host_time') AS record
 SLIDE LENGTH 5min BY response_time count() AS cnt, record, sid, host, request_time, response_time
 LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, host, request_time, response_time USING mongo_persist('front', 'test', ['record', 'sid', 'host'])
+EMIT record, cnt, sid, host, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host'])
 ;
 FROM s4
 BEGIN GROUP BY uri
@@ -76,13 +76,13 @@ INTO s5
 FROM s5
 EACH *, ifnull(record, 'cnt_uri') AS record, count() AS cnt
 LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, host, uri, request_time, response_time USING mongo_persist('front', 'test', ['record', 'sid', 'host', 'uri'])
+EMIT record, cnt, sid, host, uri, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host', 'uri'])
 ;
 FROM s5
 EACH *, ifnull(record, 'cnt_uri_time') AS record
 SLIDE LENGTH 5min BY response_time count() AS cnt, record, sid, host, uri, request_time, response_time
 LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, host, uri, request_time, response_time USING mongo_persist('front', 'test', ['record', 'sid', 'host', 'uri'])
+EMIT record, cnt, sid, host, uri, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host', 'uri'])
 ;
 FROM s5
 BEGIN GROUP BY status
@@ -91,11 +91,11 @@ INTO s6
 FROM s6
 EACH *, ifnull(record, 'cnt_status') AS record, count() AS cnt
 LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, host, uri, status, request_time, response_time USING mongo_persist('front', 'test', ['record', 'sid', 'host', 'uri', 'status'])
+EMIT record, cnt, sid, host, uri, status, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host', 'uri', 'status'])
 ;
 FROM s6
 EACH *, ifnull(record, 'cnt_status_time') AS record
 SLIDE LENGTH 5min BY response_time count() AS cnt, record, sid, host, uri, status, request_time, response_time
 LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, host, uri, status, request_time, response_time USING mongo_persist('front', 'test', ['record', 'sid', 'host', 'uri', 'status'])
+EMIT record, cnt, sid, host, uri, status, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host', 'uri', 'status'])
 ;

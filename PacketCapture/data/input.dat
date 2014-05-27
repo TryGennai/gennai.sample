@@ -1,0 +1,20 @@
+{"request_pheader":{"ID":20,"Source_Ip":"172.20.4.64","Destination_Ip":"160.37.39.43","Source_Port":80,"Destination_Port":1920},"request_properties":{"Host":"host.004.jp","Request_URI":"/path/002 HTTP/1.1"}}
+{"response_pheader":{"ID":21,"Source_Ip":"160.37.39.43","Destination_Ip":"172.20.4.64","Source_Port":1920,"Destination_Port":80},"response_properties":{"Status":"HTTP/1.1 304 Not Modified"}}
+{"request_pheader":{"ID":18,"Source_Ip":"172.126.24.4","Destination_Ip":"160.217.112.173","Source_Port":10080,"Destination_Port":2420},"request_properties":{"Host":"host.004.jp","Request_URI":"/path/004 HTTP/1.1"}}
+{"response_pheader":{"ID":19,"Source_Ip":"160.217.112.173","Destination_Ip":"172.126.24.4","Source_Port":2420,"Destination_Port":10080},"response_properties":{"Status":"HTTP/1.1 200 OK"}}
+{"request_pheader":{"ID":16,"Source_Ip":"172.22.24.124","Destination_Ip":"160.127.39.443","Source_Port":80,"Destination_Port":1520},"request_properties":{"Host":"host.005.jp","Request_URI":"/path/003 HTTP/1.1"}}
+{"response_pheader":{"ID":17,"Source_Ip":"160.127.39.443","Destination_Ip":"172.22.24.124","Source_Port":1520,"Destination_Port":80},"response_properties":{"Status":"HTTP/1.1 200 OK"}}
+{"request_pheader":{"ID":14,"Source_Ip":"172.20.4.64","Destination_Ip":"160.37.39.43","Source_Port":80,"Destination_Port":420},"request_properties":{"Host":"host.002.jp","Request_URI":"/path/004 HTTP/1.1"}}
+{"response_pheader":{"ID":15,"Source_Ip":"160.37.39.43","Destination_Ip":"172.20.4.64","Source_Port":420,"Destination_Port":80},"response_properties":{"Status":"HTTP/1.1 200 OK"}}
+{"request_pheader":{"ID":12,"Source_Ip":"172.22.24.124","Destination_Ip":"160.127.39.443","Source_Port":80,"Destination_Port":11420},"request_properties":{"Host":"host.004.jp","Request_URI":"/path/001 HTTP/1.1"}}
+{"response_pheader":{"ID":13,"Source_Ip":"160.127.39.443","Destination_Ip":"172.22.24.124","Source_Port":11420,"Destination_Port":80},"response_properties":{"Status":"HTTP/1.1 404 Not Found"}}
+{"request_pheader":{"ID":10,"Source_Ip":"172.126.24.4","Destination_Ip":"160.217.112.173","Source_Port":80,"Destination_Port":1420},"request_properties":{"Host":"host.003.jp","Request_URI":"/path/002 HTTP/1.1"}}
+{"response_pheader":{"ID":11,"Source_Ip":"160.217.112.173","Destination_Ip":"172.126.24.4","Source_Port":1420,"Destination_Port":80},"response_properties":{"Status":"HTTP/1.1 200 OK"}}
+{"request_pheader":{"ID":8,"Source_Ip":"172.22.24.124","Destination_Ip":"160.127.39.443","Source_Port":80,"Destination_Port":11420},"request_properties":{"Host":"host.004.jp","Request_URI":"/path/003 HTTP/1.1"}}
+{"response_pheader":{"ID":9,"Source_Ip":"160.127.39.443","Destination_Ip":"172.22.24.124","Source_Port":11420,"Destination_Port":80},"response_properties":{"Status":"HTTP/1.1 200 OK"}}
+{"request_pheader":{"ID":6,"Source_Ip":"172.126.24.4","Destination_Ip":"160.217.112.173","Source_Port":80,"Destination_Port":1020},"request_properties":{"Host":"host.001.jp","Request_URI":"/path/003 HTTP/1.1"}}
+{"response_pheader":{"ID":7,"Source_Ip":"160.217.112.173","Destination_Ip":"172.126.24.4","Source_Port":1020,"Destination_Port":80},"response_properties":{"Status":"HTTP/1.1 200 OK"}}
+{"request_pheader":{"ID":4,"Source_Ip":"172.126.24.4","Destination_Ip":"160.217.112.173","Source_Port":80,"Destination_Port":11420},"request_properties":{"Host":"host.005.jp","Request_URI":"/path/002 HTTP/1.1"}}
+{"response_pheader":{"ID":5,"Source_Ip":"160.217.112.173","Destination_Ip":"172.126.24.4","Source_Port":11420,"Destination_Port":80},"response_properties":{"Status":"HTTP/1.1 304 Not Modified"}}
+{"request_pheader":{"ID":2,"Source_Ip":"172.126.24.4","Destination_Ip":"160.217.112.173","Source_Port":80,"Destination_Port":1520},"request_properties":{"Host":"host.004.jp","Request_URI":"/path/002 HTTP/1.1"}}
+{"response_pheader":{"ID":3,"Source_Ip":"160.217.112.173","Destination_Ip":"172.126.24.4","Source_Port":1520,"Destination_Port":80},"response_properties":{"Status":"HTTP/1.1 200 OK"}}
