@@ -1,0 +1,54 @@
+{ "cnt" : NumberLong(10), "record" : "cnt_all" }
+{ "cnt" : NumberLong(10), "record" : "cnt_all_time" }
+{ "cnt" : NumberLong(2), "host" : "host.004.jp", "record" : "cnt_uri", "sid" : "suu", "uri" : "/path/002 HTTP/1.1" }
+{ "cnt" : NumberLong(7), "record" : "cnt_sid", "sid" : "suu" }
+{ "cnt" : NumberLong(5), "host" : "host.004.jp", "record" : "cnt_host", "sid" : "suu" }
+{ "cnt" : NumberLong(7), "record" : "cnt_sid_time", "sid" : "suu" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_status", "sid" : "suu", "status" : "HTTP/1.1 304 Not Modified", "uri" : "/path/002 HTTP/1.1" }
+{ "cnt" : NumberLong(2), "host" : "host.004.jp", "record" : "cnt_uri_time", "sid" : "suu", "uri" : "/path/002 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_status_time", "sid" : "suu", "status" : "HTTP/1.1 304 Not Modified", "uri" : "/path/002 HTTP/1.1" }
+{ "cnt" : NumberLong(5), "host" : "host.004.jp", "record" : "cnt_host_time", "sid" : "suu" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_status", "sid" : "suu", "status" : "HTTP/1.1 200 OK", "uri" : "/path/004 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_uri", "sid" : "suu", "uri" : "/path/004 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_status_time", "sid" : "suu", "status" : "HTTP/1.1 200 OK", "uri" : "/path/004 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_uri_time", "sid" : "suu", "uri" : "/path/004 HTTP/1.1" }
+{ "cnt" : NumberLong(2), "host" : "host.005.jp", "record" : "cnt_host", "sid" : "suu" }
+{ "cnt" : NumberLong(1), "host" : "host.005.jp", "record" : "cnt_status", "sid" : "suu", "status" : "HTTP/1.1 200 OK", "uri" : "/path/003 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.005.jp", "record" : "cnt_uri_time", "sid" : "suu", "uri" : "/path/003 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.005.jp", "record" : "cnt_status_time", "sid" : "suu", "status" : "HTTP/1.1 200 OK", "uri" : "/path/003 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.005.jp", "record" : "cnt_uri", "sid" : "suu", "uri" : "/path/003 HTTP/1.1" }
+{ "cnt" : NumberLong(2), "host" : "host.005.jp", "record" : "cnt_host_time", "sid" : "suu" }
+{ "cnt" : NumberLong(3), "record" : "cnt_sid", "sid" : "zxy" }
+{ "cnt" : NumberLong(1), "host" : "host.002.jp", "record" : "cnt_host_time", "sid" : "zxy" }
+{ "cnt" : NumberLong(1), "host" : "host.002.jp", "record" : "cnt_uri", "sid" : "zxy", "uri" : "/path/004 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.002.jp", "record" : "cnt_uri_time", "sid" : "zxy", "uri" : "/path/004 HTTP/1.1" }
+{ "cnt" : NumberLong(3), "record" : "cnt_sid_time", "sid" : "zxy" }
+{ "cnt" : NumberLong(1), "host" : "host.002.jp", "record" : "cnt_host", "sid" : "zxy" }
+{ "cnt" : NumberLong(1), "host" : "host.002.jp", "record" : "cnt_status", "sid" : "zxy", "status" : "HTTP/1.1 200 OK", "uri" : "/path/004 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.002.jp", "record" : "cnt_status_time", "sid" : "zxy", "status" : "HTTP/1.1 200 OK", "uri" : "/path/004 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_uri_time", "sid" : "suu", "uri" : "/path/001 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_status_time", "sid" : "suu", "status" : "HTTP/1.1 404 Not Found", "uri" : "/path/001 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_status", "sid" : "suu", "status" : "HTTP/1.1 404 Not Found", "uri" : "/path/001 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_uri", "sid" : "suu", "uri" : "/path/001 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.003.jp", "record" : "cnt_uri", "sid" : "zxy", "uri" : "/path/002 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.003.jp", "record" : "cnt_uri_time", "sid" : "zxy", "uri" : "/path/002 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.003.jp", "record" : "cnt_status", "sid" : "zxy", "status" : "HTTP/1.1 200 OK", "uri" : "/path/002 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.003.jp", "record" : "cnt_host", "sid" : "zxy" }
+{ "cnt" : NumberLong(1), "host" : "host.003.jp", "record" : "cnt_host_time", "sid" : "zxy" }
+{ "cnt" : NumberLong(1), "host" : "host.003.jp", "record" : "cnt_status_time", "sid" : "zxy", "status" : "HTTP/1.1 200 OK", "uri" : "/path/002 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_uri", "sid" : "suu", "uri" : "/path/003 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_uri_time", "sid" : "suu", "uri" : "/path/003 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_status", "sid" : "suu", "status" : "HTTP/1.1 200 OK", "uri" : "/path/003 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_status_time", "sid" : "suu", "status" : "HTTP/1.1 200 OK", "uri" : "/path/003 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.001.jp", "record" : "cnt_uri", "sid" : "zxy", "uri" : "/path/003 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.001.jp", "record" : "cnt_uri_time", "sid" : "zxy", "uri" : "/path/003 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.001.jp", "record" : "cnt_host_time", "sid" : "zxy" }
+{ "cnt" : NumberLong(1), "host" : "host.001.jp", "record" : "cnt_status", "sid" : "zxy", "status" : "HTTP/1.1 200 OK", "uri" : "/path/003 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.001.jp", "record" : "cnt_status_time", "sid" : "zxy", "status" : "HTTP/1.1 200 OK", "uri" : "/path/003 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.001.jp", "record" : "cnt_host", "sid" : "zxy" }
+{ "cnt" : NumberLong(1), "host" : "host.005.jp", "record" : "cnt_status_time", "sid" : "suu", "status" : "HTTP/1.1 304 Not Modified", "uri" : "/path/002 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.005.jp", "record" : "cnt_uri", "sid" : "suu", "uri" : "/path/002 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.005.jp", "record" : "cnt_uri_time", "sid" : "suu", "uri" : "/path/002 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.005.jp", "record" : "cnt_status", "sid" : "suu", "status" : "HTTP/1.1 304 Not Modified", "uri" : "/path/002 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_status", "sid" : "suu", "status" : "HTTP/1.1 200 OK", "uri" : "/path/002 HTTP/1.1" }
+{ "cnt" : NumberLong(1), "host" : "host.004.jp", "record" : "cnt_status_time", "sid" : "suu", "status" : "HTTP/1.1 200 OK", "uri" : "/path/002 HTTP/1.1" }
