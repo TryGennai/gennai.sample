@@ -37,7 +37,8 @@ db.output.find({}, {_id: 0, cnt: 1, record: 1, sid: 1, host: 1, uri: 1, status: 
 ```
 
 下記のフィールドは非表示
- * `_id
+ * \_id
  * request_time
  * response_time
 
+※ TOPOLOGYからLIMIT句を削除して実行した場合です。
