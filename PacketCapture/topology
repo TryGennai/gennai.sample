@@ -11,7 +11,7 @@ FROM (
     ResponsePacket._time AS response_time
 ) AS packet USING kafka_spout()
 EACH
-  request_properties.Host AS host, 
+  request_properties.Host AS host,
   request_properties.Request_URI AS uri,
   response_properties.Status AS status,
   request_time,
@@ -35,12 +35,13 @@ INTO s2
 ;
 FROM s2
 FILTER sid IS NULL
-JOIN unknowns ON unknowns.host = host TO unknowns.host AS flag  EXPIRE 10min USING mongo_fetch('front', 'unknowns')
+JOIN unknowns ON unknowns.host = host TO unknowns.host AS flag EXPIRE 10min USING mongo_fetch('front', 'unknowns')
 FILTER flag IS NULL
 EMIT host USING mongo_persist('front', 'unknowns')
 ;
 FROM s2
-BEGIN GROUP BY sid 
+EACH ifnull(sid, 'unknowns') AS sid, host, uri, status, request_time, response_time
+BEGIN GROUP BY sid
 INTO s3
 ;
 FROM s3
@@ -55,6 +56,7 @@ LIMIT FIRST EVERY 1min
 EMIT record, cnt, sid, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid'])
 ;
 FROM s3
+FILTER sid <> 'unknowns'
 BEGIN GROUP BY host
 INTO s4
 ;
@@ -70,32 +72,22 @@ LIMIT FIRST EVERY 1min
 EMIT record, cnt, sid, host, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host'])
 ;
 FROM s4
-BEGIN GROUP BY uri
+FILTER NOT status IN ('HTTP/1.0 200 OK', 'HTTP/1.1 200 OK', 'HTTP/1.1 206 Partial Content', 'HTTP/1.1 301 Moved Permanently', 'HTTP/1.1 302 Found', 'HTTP/1.1 304 Not Modified')
+BEGIN GROUP BY status
 INTO s5
 ;
 FROM s5
-EACH *, ifnull(record, 'cnt_uri') AS record, count() AS cnt
-LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, host, uri, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host', 'uri'])
-;
-FROM s5
-EACH *, ifnull(record, 'cnt_uri_time') AS record
-SLIDE LENGTH 5min BY response_time count() AS cnt, record, sid, host, uri, request_time, response_time
-LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, host, uri, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host', 'uri'])
-;
-FROM s5
-BEGIN GROUP BY status
-INTO s6
-;
-FROM s6
 EACH *, ifnull(record, 'cnt_status') AS record, count() AS cnt
 LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, host, uri, status, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host', 'uri', 'status'])
+EMIT record, cnt, sid, host, status, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host', 'status'])
 ;
-FROM s6
+FROM s5
 EACH *, ifnull(record, 'cnt_status_time') AS record
 SLIDE LENGTH 5min BY response_time count() AS cnt, record, sid, host, uri, status, request_time, response_time
 LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, host, uri, status, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host', 'uri', 'status'])
+EMIT record, cnt, sid, host, status, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host', 'status'])
+;
+FROM s5
+EACH *, ifnull(record, 'uri_status') AS record
+EMIT record, sid, host, uri, status, request_time, response_time USING mongo_persist('front', 'output')
 ;
