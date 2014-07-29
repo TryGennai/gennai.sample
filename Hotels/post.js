@@ -6,12 +6,12 @@
 // setting
 var id = '53d4c41fe4b0f86f8d431154';
 
-var mongodb_server = '10.0.1.13';
+var mongodb_server = 'localhost';
 var mongodb_port = 27017;
 var mongodb_database = 'hotel';
 var mongodb_collection = 'hotel';
 
-var gungnir_server = '10.0.1.13';
+var gungnir_server = 'localhost';
 var gungnir_port = 9191;
 var gungnir_tuple = 'demo';
 
