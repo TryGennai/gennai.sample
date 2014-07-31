@@ -1,0 +1,82 @@
+#!/bin/bash
+#
+# kafka      kafka server
+#
+# chkconfig: 35 81 21
+# description: kafka server.
+# processname: kafka
+# pidfile: /var/log/kafka/kafka.pid 
+# config: /opt/kafka/conf/server.properties
+#
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+RETVAL=0
+prog="kafka"
+lockfile=/var/lock/subsys/$prog
+pidfile=/var/log/kafka/kafka.pid
+
+status -p $pidfile >/dev/null 2>&1
+#status -l 'kafka.Kafka' >/dev/null 2>&1
+running=$?
+
+conf_check() {
+    [ -x /opt/kafka/bin/kafka-server-start.sh ] || exit 5
+    [ -x /opt/kafka/bin/kafka-server-stop.sh ] || exit 5
+    [ -d /opt/kafka/config ] || exit 6
+}
+
+start() {
+	conf_check
+	# Start daemons.
+	echo -n $"Starting kafka: "
+	[ -x $CHROOT_UPDATE ] && $CHROOT_UPDATE
+	sudo -u vagrant -i /opt/kafka/bin/kafkaServer start /opt/kafka/config/server.properties 2>/dev/null 1>&2 &
+        #&& success || failure $"$prog start"
+        sleep 3
+        PS=`ps ax | grep -i 'kafka.Kafka' | grep -v grep | awk '{print $1}'`
+        if [ ! -z "$PS" ]; then
+            success
+            echo "$PS" > $pidfile
+            RETVAL=0
+        else
+            failure $"$prog start"
+            RETVAL=1
+        fi
+	[ $RETVAL -eq 0 ] && touch $lockfile
+        echo
+	return $RETVAL
+}
+
+stop() {
+	conf_check
+        # Stop daemons.
+	echo -n $"Shutting down kafka: "
+	sudo -u vagrant -i /opt/kafka/bin/kafkaServer stop  2>/dev/null 1>&2 && success || failure $"$prog stop"
+        ps -p `cat $pidfile` 2>/dev/null 1>&2
+	RETVAL=$?
+	[ $RETVAL -eq 0 ] && rm -f $lockfile $pidfile
+	echo
+	return $RETVAL
+}
+
+# See how we were called.
+case "$1" in
+  start)
+	# [ $running -eq 0 ] && exit 0
+	start
+	;;
+  stop)
+	# [ $running -eq 0 ] || exit 0
+	stop
+	;;
+  *)
+	echo $"Usage: $0 {start|stop}"
+	exit 2
+esac
+
+exit $?

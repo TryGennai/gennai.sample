@@ -2,7 +2,37 @@
 
 ## 事前準備
 
-MongoDBにマスタデータ用意。
+下記項目の事前準備が必要。
+
+1. gungnirにユーザを作成
+2. TUPLE作成
+3. MongoDBにマスタデータ用意
+
+以降詳細。
+
+### 1. gungnirにユーザを作成
+
+下記のユーザを作成する。
+
+* ユーザ名称: gennai
+* パスワード: gennai
+
+```
+$ gungnir -u root -p gennai
+gungnir> CREATE USER 'gennai' IDENTIFIED BY 'gennai';
+```
+
+### 2. TUPLE作成
+
+1.で作成したユーザにTUPLEを作成する。
+※ tupleファイル
+
+```
+$ gungnir -u gennai -p gennai
+gungnir> CREATE TUPLE demo(status STRING, hotelId STRING, _time);
+```
+
+### 3. MongoDBにマスタデータ用意
 
 ```
 use demo;
@@ -40,7 +70,10 @@ GungnirServreにデモイベントを投入するスクリプトの実行方法�
 
 watch:commit:cancel = 90:9:1
 
+
 ### nodeで実行する場合
+
+※ IDを変更すること(下記参照)。
 
 ```
 $ npm install
@@ -51,8 +84,21 @@ $ node post.js
 
 ### shで実行する場合
 
+※ IDを変更すること(下記参照)。
+
 ```
 $ sh post.sh
 ```
 
 停止はCtrl-C。
+
+### ID確認方法
+
+下記の"id"を取得。
+
+```
+$ gungnir -u [id] -p [password]
+gungnir> DESC USER;
+{"id":"53d9de890cf214613ba97185","name":"gennai","createTime":"2014-07-31T06:13:29.826Z"}
+gungnir>
+```
