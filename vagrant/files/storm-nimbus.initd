@@ -6,7 +6,7 @@
 #
 # chkconfig: 345 20 80
 # description: Starts and stops storm-nimbus
-#. /etc/init.d/functions
+. /etc/init.d/functions
 stormBin=/opt/storm/bin/storm
 stormSvc=$(echo $0 | cut -d'-' -f2)
 desc="Storm $stormSvc daemon"
@@ -24,21 +24,24 @@ if [ -f /etc/sysconfig/storm ]; then
 fi
  
 start() {
-  echo "Starting $desc (storm-$stormSvc): "
-  su $stormUser -c "nohup $stormBin $stormSvc >>$outFile 2>&1 &"
+  echo -n "Starting $desc (storm-$stormSvc): "
+  su $stormUser -c "nohup $stormBin $stormSvc >>$outFile 2>&1 &" && success || failure $"$stormSvc start"
   RETVAL=$?
+  echo
+  sleep 3
 	
   return $RETVAL
 }
  
 stop() {
-  echo "Shutting down $desc (storm-$stormSvc): "
+  echo -n "Shutting down $desc (storm-$stormSvc): "
   if [ $stormSvc == "ui" ]; then
-    pkill -f backtype.storm.ui.core
+    pkill -f backtype.storm.ui.core && success || failure $"$stormSvc stop"
   else
-    pkill -f backtype.storm.daemon.$stormSvc
+    pkill -f backtype.storm.daemon.$stormSvc && success || failure $"$stormSvc stop"
   fi
-	[ -e $pidFile ] && rm $pidFile
+  echo
+  [ -e $pidFile ] && rm $pidFile
 }
  
 restart() {

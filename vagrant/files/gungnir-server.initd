@@ -6,8 +6,7 @@
 #
 # chkconfig: 345 20 80
 # description: Starts and stops gungnir-server
-#. /etc/init.d/functions
-# stormBin=/opt/storm/bin/storm
+. /etc/init.d/functions
 serverBin=/opt/gungnir-server/bin/server.sh
 # stormSvc=$(echo $0 | cut -d'-' -f2)
 desc="GungnirServer daemon"
@@ -25,16 +24,19 @@ if [ -f /etc/sysconfig/gungnir-server ]; then
 fi
  
 start() {
-  echo "Starting $desc : "
-  su $serverUser -c "$serverBin start >>$outFile 2>&1"
+  echo -n "Starting $desc : "
+  su $serverUser -c "$serverBin start >>$outFile 2>&1" && success || failure $"$desc start"
+  echo
+  sleep 3
   RETVAL=$?
 	
   return $RETVAL
 }
  
 stop() {
-  echo "Shutting down $desc : "
-  su $serverUser -c "$serverBin stop >>$outFile 2>&1"
+  echo -n "Shutting down $desc : "
+  su $serverUser -c "$serverBin stop >>$outFile 2>&1" && success || failure $"$desc stop"
+  echo
   [ -e $pidFile ] && rm $pidFile
 }
  
