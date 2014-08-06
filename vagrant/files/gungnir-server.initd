@@ -7,11 +7,11 @@
 # chkconfig: 345 20 80
 # description: Starts and stops gungnir-server
 . /etc/init.d/functions
-serverBin=/opt/gungnir-server/bin/server.sh
+serverBin=__GUNGNIR_INSTALL_DIR__/gungnir-server/bin/server.sh
 # stormSvc=$(echo $0 | cut -d'-' -f2)
 desc="GungnirServer daemon"
 outFile="/var/log/gungnir/gungnir-server.out"
-serverUser=vagrant
+serverUser=__GUNGNIR_USER__
 pidFile=/var/run/gungnir-server.pid
  
 if ! [ -f $serverBin ]; then
@@ -47,7 +47,7 @@ restart() {
  
 status() {
   # pid=$(pgrep -f backtype.storm.daemon.$stormSvc)
-  pid=`cat /opt/gungnir-server/gungnir_server.pid`
+  pid=`cat __GUNGNIR_INSTALL_DIR__/gungnir-server/gungnir_server.pid`
     
   if [ -z $pid ]; then
     echo "GungnirServer is NOT running."

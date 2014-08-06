@@ -2,11 +2,11 @@
 #
 # zookeeper      zookeeper
 #
-# chkconfig: 35 80 20
+# chkconfig: 345 80 20
 # description: zookeeper.
 # processname: zookeeper
 # pidfile: /var/local/zookeeper/zookeeper_server.pid
-# config: /opt/zookeeper/conf/zoo.cfg
+# config: __ZK_INSTALL_DIR__/zookeeper/conf/zoo.cfg
 #
 
 # Source function library.
@@ -24,8 +24,8 @@ status -p $pidfile >/dev/null 2>&1
 running=$?
 
 conf_check() {
-    [ -x /opt/zookeeper/bin/zkServer.sh ] || exit 5
-    [ -d /opt/zookeeper/conf ] || exit 6
+    [ -x __ZK_INSTALL_DIR__/zookeeper/bin/zkServer.sh ] || exit 5
+    [ -d __ZK_INSTALL_DIR__/zookeeper/conf ] || exit 6
 }
 
 start() {
@@ -33,9 +33,9 @@ start() {
 	# Start daemons.
 	echo -n $"Starting zookeeper: "
 	[ -x $CHROOT_UPDATE ] && $CHROOT_UPDATE
-	sudo -u vagrant -i /opt/zookeeper/bin/zkServer.sh start 2>/dev/null 1>&2 && success || failure $"$prog start"
+	sudo -u __ZK_USER__ -i __ZK_INSTALL_DIR__/zookeeper/bin/zkServer.sh start 2>/dev/null 1>&2 && success || failure $"$prog start"
 	RETVAL=$?
-        sleep 10
+  sleep 3
 	[ $RETVAL -eq 0 ] && touch $lockfile
         echo
 	return $RETVAL
@@ -45,7 +45,7 @@ stop() {
 	conf_check
         # Stop daemons.
 	echo -n $"Shutting down zookeeper: "
-	sudo -u vagrant -i /opt/zookeeper/bin/zkServer.sh stop 2>/dev/null 1>&2 && success || failure $"$prog stop"
+	sudo -u __ZK_USER__ -i __ZK_INSTALL_DIR__/zookeeper/bin/zkServer.sh stop 2>/dev/null 1>&2 && success || failure $"$prog stop"
 	RETVAL=$?
 	[ $RETVAL -eq 0 ] && rm -f $lockfile $pidfile
 	echo

@@ -19,6 +19,41 @@ VM起動後、各サービスが起動している事が確認できれば下記
 $ gungnir -u root -p gennai
 ```
 
+## config.ini
+
+`files/config.ini`に各種設定を書く事ができます。
+
+|#|Section Name|Key|Value|default Value|Content|
+|:--:|:--|:--|:--|:--|:--|
+|1|common|mode|local/value|local||
+|2|zookeeper|install|true/false|true||
+|3|zookeeper|dir||/opt|
+|4|zookeeper|version||3.4.5||
+|5|zookeeper|user||vagrant||
+|6|zookeeper|group||vagrant||
+|7|zookeeper|service|on/off|off||
+|8|kafka|install|true/false|true||
+|9|kafka|version||0.8.0||
+|10|kafka|scala||2.8.0||
+|11|kafka|user||vagrant||
+|12|kafka|group||vagrant||
+|13|kafka|service|on/off|off||
+|14|mongodb|install|true/false|true||
+|15|mongodb|service|on/off|off||
+|16|storm|install|true/false|true||
+|17|storm|dir||/opt||
+|18|storm|version||0.9.0.1||
+|19|storm|user||vagrant||
+|20|storm|group||vagrant||
+|21|storm|service|on/off|off||
+|22|gungnir|install|true/false|true||
+|23|gungnir|dir||/opt||
+|24|gungnir|user||vagrant||
+|25|gungnir|group||vagrant||
+|26|gungnir|service|on/off|off||
+
+
+
 ## サービス
 
 下記はサービス化しています。
@@ -28,10 +63,13 @@ $ gungnir -u root -p gennai
 |1|ZooKeeper|○|○||
 |2|Kafka|○|○||
 |3|MongoDB|○|○||
-|4|Storm nimbus|-|○||
-|5|Storm supervisor|-|○||
-|6|Storm UI|-|-||
+|4|Storm nimbus|-|○|※1 ※2|
+|5|Storm supervisor|-|○|※1 ※2|
+|6|Storm UI|-|-|※1 ※2|
 |7|GungnirServer|○|○||
+
+※1: localモードの場合はインストールされません。
+※2: localモードかつStormをインストールしたい場合には、config.iniに`install=true`をstormセクションに明示的に記載してください。
 
 ### ZooKeeper
 
@@ -81,4 +119,3 @@ Vagrantfileを編集し、VMのメモリ容量・CPU数を増やしてくださ�
   virtualbox.memory=2048
   virtualbox.cpus = 2
 ```
-
