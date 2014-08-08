@@ -75,7 +75,16 @@ ln -s ${GUNGNIR_INSTALL_DIR}/gungnir-server-${GUNGNIR_VERSION} ${GUNGNIR_INSTALL
 ln -s ${GUNGNIR_INSTALL_DIR}/gungnir-client-${GUNGNIR_VERSION} ${GUNGNIR_INSTALL_DIR}/gungnir-client
 
 echo " - setting."
-cp /vagrant/files/gungnir.yaml ${GUNGNIR_INSTALL_DIR}/gungnir-server/conf
+
+# mode check.
+. /vagrant/provision/shell/common.sh
+MODE=`getMode`
+if [ "${MODE}" = "distributed" ] ; then
+	cp /vagrant/files/gungnir.yaml ${GUNGNIR_INSTALL_DIR}/gungnir-server/conf
+else
+	sed -e "s/\(storm.cluster.mode.*$\)/# \1/g" \
+	/vagrant/files/gungnir.yaml > ${GUNGNIR_INSTALL_DIR}/gungnir-server/conf/gungnir.yaml
+fi
 
 mkdir -p /var/log/gungnir
 

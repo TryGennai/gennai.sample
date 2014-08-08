@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DEFAULT_MODE=local
+DEFAULT_MODE=distributed
 
 function getMode() {
 	eval `sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
@@ -17,6 +17,9 @@ function getMode() {
 	fi
 
 	case ${mode} in
+		"local")
+			echo ${mode}
+			;;
 		"distributed")
 			echo ${mode}
 			;;

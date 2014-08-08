@@ -14,6 +14,7 @@ STORM_SERVICE=off
 STORM_MODE=`getMode`
 if [ "${STORM_MODE}" = "local" ] ; then
 	install=false
+	service=off
 fi
 
 # source config and override settings.
