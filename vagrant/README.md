@@ -4,19 +4,8 @@
 
 1. [アプリケーション](#application)
 2. [モード(mode)](#mode)
-2.1. [local mode](#localmode)
-2.2. [distributed mode](#distributedmode)
-
 3. [config.ini](#config)
 4. [サービス](#service)
-4.1. [ZooKeeper](#zookeeper)
-4.2. [Kafka](#kafka)
-4.3. [MongoDB](#mongodb)
-4.4. [Storm nimbu](#nimbus)
-4.5. [Storm supervisor](#supervisor)
-4.6. [Storm UI](#ui)
-4.7. [GungnirServer](#gungnir)
-
 5. [VMに関して](#vm)
 6. [メモリ](#memory)
 
