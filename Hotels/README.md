@@ -84,10 +84,10 @@ $ node post.js
 
 ### shで実行する場合
 
-※ IDを変更すること(下記参照)。
+IDを引数に実行すること(下記参照)。
 
 ```
-$ sh post.sh
+$ sh post.sh [ID]
 ```
 
 停止はCtrl-C。

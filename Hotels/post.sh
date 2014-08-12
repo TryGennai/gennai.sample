@@ -1,9 +1,13 @@
 #!/bin/sh
 
+if [ $# -lt 1 ] ; then
+	echo "Usage ./$0 [GUNGNIR_UID]"
+	exit 1
+fi
 
 GUNGNIR_SERVER='localhost'
 GUNGNIR_PORT=9191
-GUNGNIR_UID='53d4c41fe4b0f86f8d431154'
+GUNGNIR_UID=$1
 GUNGNIR_TUPLE='demo'
 
 
