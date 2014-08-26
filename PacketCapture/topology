@@ -19,15 +19,15 @@ EACH
 INTO s1
 ;
 FROM s1
-EACH *, ifnull(record, 'cnt_all') AS record, count() AS cnt
-LIMIT FIRST EVERY 1min
-EMIT record, cnt, request_time, response_time USING mongo_persist('front', 'output', ['record'])
+SNAPSHOT EVERY 1min *, count() AS cnt
+EACH *, sum(cnt) AS sum, ifnull(record, 'cnt_all') AS record parallelism 1
+EMIT record, sum, request_time, response_time USING mongo_persist('front', 'count', ['record']) parallelism 1
 ;
 FROM s1
-EACH *, ifnull(record, 'cnt_all_time') AS record
-SLIDE LENGTH 5min BY response_time count() AS cnt, record, request_time, response_time
-LIMIT FIRST EVERY 1min
-EMIT record, cnt, request_time, response_time USING mongo_persist('front', 'output', ['record'])
+SNAPSHOT EVERY 1min *, count() AS cnt
+SLIDE LENGTH 5min BY response_time sum(cnt) AS sum, request_time, response_time parallelism 1
+EACH *, ifnull(record, 'cnt_all_time') AS record parallelism 1
+EMIT record, sum, request_time, response_time USING mongo_persist('front', 'count', ['record']) parallelism 1
 ;
 FROM s1
 JOIN service ON service.host = host TO service.sid AS sid EXPIRE 10min USING mongo_fetch('front', 'service')
@@ -45,15 +45,15 @@ BEGIN GROUP BY sid
 INTO s3
 ;
 FROM s3
-EACH *, ifnull(record, 'cnt_sid') AS record, count() AS cnt
-LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid'])
+SNAPSHOT EVERY 1min *, count() AS cnt
+EACH *, sum(cnt) AS sum, ifnull(record, 'cnt_sid') AS record parallelism 1
+EMIT record, sum, sid, request_time, response_time USING mongo_persist('front', 'count', ['record', 'sid']) parallelism 1
 ;
 FROM s3
-EACH *, ifnull(record, 'cnt_sid_time') AS record
-SLIDE LENGTH 5min BY response_time count() AS cnt, record, sid, request_time, response_time
-LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid'])
+SNAPSHOT EVERY 1min *, count() AS cnt
+SLIDE LENGTH 5min BY response_time sum(cnt) AS sum, sid, request_time, response_time parallelism 1
+EACH *, ifnull(record, 'cnt_sid_time') AS record parallelism 1
+EMIT record, sum, sid, request_time, response_time USING mongo_persist('front', 'count', ['record', 'sid']) parallelism 1
 ;
 FROM s3
 FILTER sid <> 'unknowns'
@@ -61,15 +61,15 @@ BEGIN GROUP BY host
 INTO s4
 ;
 FROM s4
-EACH *, ifnull(record, 'cnt_host') AS record, count() AS cnt
-LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, host, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host'])
+SNAPSHOT EVERY 1min *, count() AS cnt
+EACH *, sum(cnt) AS sum, ifnull(record, 'cnt_host') AS record  parallelism 1
+EMIT record, sum, sid, host, request_time, response_time USING mongo_persist('front', 'count', ['record', 'sid', 'host']) parallelism 1
 ;
 FROM s4
-EACH *, ifnull(record, 'cnt_host_time') AS record
-SLIDE LENGTH 5min BY response_time count() AS cnt, record, sid, host, request_time, response_time
-LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, host, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host'])
+SNAPSHOT EVERY 1min *, count() AS cnt
+SLIDE LENGTH 5min BY response_time sum(cnt) AS sum, sid, host, request_time, response_time parallelism 1
+EACH *, ifnull(record, 'cnt_host_time') AS record parallelism 1
+EMIT record, sum, sid, host, request_time, response_time USING mongo_persist('front', 'count', ['record', 'sid', 'host']) parallelism 1
 ;
 FROM s4
 FILTER NOT status IN ('HTTP/1.0 200 OK', 'HTTP/1.1 200 OK', 'HTTP/1.1 206 Partial Content', 'HTTP/1.1 301 Moved Permanently', 'HTTP/1.1 302 Found', 'HTTP/1.1 304 Not Modified')
@@ -77,15 +77,15 @@ BEGIN GROUP BY status
 INTO s5
 ;
 FROM s5
-EACH *, ifnull(record, 'cnt_status') AS record, count() AS cnt
-LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, host, status, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host', 'status'])
+SNAPSHOT EVERY 1min *, count() AS cnt
+EACH *, sum(cnt) AS sum, ifnull(record, 'cnt_status') AS record  parallelism 1
+EMIT record, sum, sid, host, status, request_time, response_time USING mongo_persist('front', 'count', ['record', 'sid', 'host', 'status']) parallelism 1
 ;
 FROM s5
-EACH *, ifnull(record, 'cnt_status_time') AS record
-SLIDE LENGTH 5min BY response_time count() AS cnt, record, sid, host, uri, status, request_time, response_time
-LIMIT FIRST EVERY 1min
-EMIT record, cnt, sid, host, status, request_time, response_time USING mongo_persist('front', 'output', ['record', 'sid', 'host', 'status'])
+SNAPSHOT EVERY 1min *, count() AS cnt
+SLIDE LENGTH 5min BY response_time sum(cnt) AS sum, sid, host, uri, status, request_time, response_time parallelism 1
+EACH *, ifnull(record, 'cnt_status_time') AS record parallelism 1
+EMIT record, sum, sid, host, status, request_time, response_time USING mongo_persist('front', 'count', ['record', 'sid', 'host', 'status']) parallelism 1
 ;
 FROM s5
 EACH *, ifnull(record, 'uri_status') AS record
