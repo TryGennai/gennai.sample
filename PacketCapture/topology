@@ -74,22 +74,23 @@ EACH *, ifnull(record, 'cnt_host_time') AS record parallelism 1
 EMIT record, sum, sid, host, request_time, response_time USING mongo_persist('front', 'count', ['record', 'sid', 'host']) parallelism 1
 ;
 FROM s4
-FILTER NOT status IN ('HTTP/1.0 200 OK', 'HTTP/1.1 200 OK', 'HTTP/1.1 206 Partial Content', 'HTTP/1.1 301 Moved Permanently', 'HTTP/1.1 302 Found', 'HTTP/1.1 304 Not Modified')
-BEGIN GROUP BY status
+EACH *, REGEXP_EXTRACT(status, '(.*) (\d{3}) (.*)', 2) AS code 
+FILTER code REGEXP '^[^23]\d{2}$'
+BEGIN GROUP BY code
 INTO s5
 ;
 FROM s5
 SNAPSHOT EVERY 1min *, count() AS cnt
 EACH *, sum(cnt) AS sum, ifnull(record, 'cnt_status') AS record  parallelism 1
-EMIT record, sum, sid, host, status, request_time, response_time USING mongo_persist('front', 'count', ['record', 'sid', 'host', 'status']) parallelism 1
+EMIT record, sum, sid, host, code, request_time, response_time USING mongo_persist('front', 'count', ['record', 'sid', 'host', 'code']) parallelism 1
 ;
 FROM s5
 SNAPSHOT EVERY 1min *, count() AS cnt
-SLIDE LENGTH 5min BY response_time sum(cnt) AS sum, sid, host, uri, status, request_time, response_time parallelism 1
+SLIDE LENGTH 5min BY response_time sum(cnt) AS sum, sid, host, uri, code, request_time, response_time parallelism 1
 EACH *, ifnull(record, 'cnt_status_time') AS record parallelism 1
-EMIT record, sum, sid, host, status, request_time, response_time USING mongo_persist('front', 'count', ['record', 'sid', 'host', 'status']) parallelism 1
+EMIT record, sum, sid, host, code, request_time, response_time USING mongo_persist('front', 'count', ['record', 'sid', 'host', 'code']) parallelism 1
 ;
 FROM s5
 EACH *, ifnull(record, 'uri_status') AS record
-EMIT record, sid, host, uri, status, request_time, response_time USING mongo_persist('front', 'output')
+EMIT record, sid, host, uri, status, code, request_time, response_time USING mongo_persist('front', 'output')
 ;
