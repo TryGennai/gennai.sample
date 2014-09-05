@@ -74,7 +74,7 @@ EACH *, ifnull(record, 'cnt_host_time') AS record parallelism 1
 EMIT record, sum, sid, host, request_time, response_time USING mongo_persist('front', 'count', ['record', 'sid', 'host']) parallelism 1
 ;
 FROM s4
-EACH *, REGEXP_EXTRACT(status, '(.*) (\d{3}) (.*)', 2) AS code 
+EACH *, regexp_extract(status, '(.*) (\d{3}) (.*)', 2) AS code 
 FILTER code REGEXP '^[^23]\d{2}$'
 BEGIN GROUP BY code
 INTO s5
