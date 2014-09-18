@@ -1,4 +1,8 @@
-SET default.parallelism=32
+SET topology.metrics.enabled = true
+;
+SET topology.metrics.interval.secs = 60
+;
+SET default.parallelism = 32
 ;
 FROM (
   RequestPacket JOIN ResponsePacket
@@ -11,6 +15,7 @@ FROM (
     RequestPacket._time AS request_time,
     ResponsePacket.response_properties AS response_properties,
     ResponsePacket._time AS response_time
+  EXPIRE 10sec
 ) AS packet USING kafka_spout() parallelism 8
 EACH
   request_properties.Host AS host,
