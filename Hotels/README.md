@@ -70,18 +70,6 @@ GungnirServreにデモイベントを投入するスクリプトの実行方法�
 
 watch:commit:cancel = 90:9:1
 
-
-### nodeで実行する場合
-
-※ IDを変更すること(下記参照)。
-
-```
-$ npm install
-$ node post.js
-```
-
-停止はCtrl-C。
-
 ### shで実行する場合
 
 IDを引数に実行すること(下記参照)。

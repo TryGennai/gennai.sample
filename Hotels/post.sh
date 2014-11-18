@@ -6,7 +6,7 @@ if [ $# -lt 1 ] ; then
 fi
 
 GUNGNIR_SERVER='localhost'
-GUNGNIR_PORT=9191
+GUNGNIR_PORT=7200
 GUNGNIR_UID=$1
 GUNGNIR_TUPLE='demo'
 
@@ -24,7 +24,7 @@ do
 	INDEX=`expr ${INDEX} + 1`
 	SINDEX=`expr ${RANDOM} % 100`
 	HINDEX=`expr ${RANDOM} % 10`
-	curl -H 'Content-Type: application/json' -X POST -d '{"status":"'${STATS[${SINDEX}]}'","hotelId":"'${HOTELS[${HINDEX}]}'"}' http://${GUNGNIR_SERVER}:${GUNGNIR_PORT}/gungnir/v0.1/track/${GUNGNIR_UID}/${GUNGNIR_TUPLE}
+	curl -H 'Content-Type: application/json' -X POST -d '{"status":"'${STATS[${SINDEX}]}'","hotelId":"'${HOTELS[${HINDEX}]}'"}' http://${GUNGNIR_SERVER}:${GUNGNIR_PORT}/gungnir/v0.1/${GUNGNIR_UID}/${GUNGNIR_TUPLE}/json
 
 	if [ ${STATS[${SINDEX}]} == 'watch' ] ; then
 		WATCH_COUNT=`expr ${WATCH_COUNT} + 1`
