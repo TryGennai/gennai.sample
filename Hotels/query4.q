@@ -5,7 +5,7 @@ FROM s1
 BEGIN GROUP BY status
   EACH status, count() as count
 END GROUP
-EMIT status, count USING mongo_persist('demo', 'output1', ['status'])
+EMIT status, count USING mongo_persist('demo', 'output4_1', ['status'])
 ;
 FROM s1
 JOIN hotel
@@ -20,8 +20,8 @@ BEGIN GROUP BY hotelId
 END GROUP
 ;
 FROM s2
-EMIT * USING mongo_persist('demo', 'output3', ['hotelId', 'status'])
+EMIT * USING mongo_persist('demo', 'output4_2', ['hotelId', 'status'])
 ;
 FROM s2
-EMIT * USING kafka_emit('demo')
+EMIT * USING kafka_emit('demo4')
 ;

@@ -1,4 +1,6 @@
-デモ用クエリ
+# デモ用クエリ
+
+宿検索系のWebサイトを想定したデモ。クエリの詳細については[サンプルクエリ概要](QUERY.md)に記載。
 
 ## 事前準備
 
@@ -25,11 +27,17 @@ gungnir> CREATE USER 'gennai' IDENTIFIED BY 'gennai';
 ### 2. TUPLE作成
 
 1.で作成したユーザにTUPLEを作成する。
-※ tupleファイル
+※ tuple.qファイル
 
 ```
 $ gungnir -u gennai -p gennai
 gungnir> CREATE TUPLE demo(status STRING, hotelId STRING, _time);
+```
+
+もしくは下記で実行することも可能。
+
+```
+$ gungnir -u gennai -p gennai -f tuple.q
 ```
 
 ### 3. MongoDBにマスタデータ用意
@@ -72,7 +80,7 @@ watch:commit:cancel = 90:9:1
 
 ### shで実行する場合
 
-IDを引数に実行すること(下記参照)。
+※ IDを引数で指定すること(下記参照)。
 
 ```
 $ sh post.sh [ID]
