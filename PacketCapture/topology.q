@@ -16,7 +16,7 @@ FROM (
     ResponsePacket.response_properties AS response_properties,
     ResponsePacket._time AS response_time
   EXPIRE 10sec
-) AS packet USING kafka_spout2() parallelism 8
+) AS packet USING kafka_spout() parallelism 8
 EACH
   request_properties.Host AS host,
   request_properties.Request_URI AS uri,
