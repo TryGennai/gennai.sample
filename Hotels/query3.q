@@ -8,11 +8,8 @@ END GROUP
 EMIT status, count USING mongo_persist('demo', 'output3_1', ['status'])
 ;
 FROM s1
-JOIN hotel
-  ON hotel.hotelId = hotelId
-  TO hotel.hotelName AS hotelName, hotel.areaCd AS areaCd
-  EXPIRE 1h
-  USING mongo_fetch('demo', 'hotel')
+JOIN hotelName, areaCd
+  USING mongo_fetch('demo', 'hotel', '{hotelId: @hotelId}', ['hotelName', 'areaCd'], 1, 1h)
 BEGIN GROUP BY hotelId
   BEGIN GROUP BY status
     EACH *, count() AS count

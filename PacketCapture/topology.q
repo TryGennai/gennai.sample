@@ -37,12 +37,12 @@ EACH *, ifnull(record, 'cnt_all_time') AS record parallelism 1
 EMIT record, sum, request_time, response_time USING mongo_persist('front', 'count', ['record']) parallelism 1
 ;
 FROM s1
-JOIN service ON service.host = host TO service.sid AS sid EXPIRE 10min USING mongo_fetch('front', 'service')
+JOIN sid USING mongo_fetch('front', 'service', '{host: @host}', ['host'], 1, 10min)
 INTO s2
 ;
 FROM s2
 FILTER sid IS NULL
-JOIN unknowns ON unknowns.host = host TO unknowns.host AS flag EXPIRE 10min USING mongo_fetch('front', 'unknowns')
+JOIN flag USING mongo_fetch('front', 'unknowns', '{host: @host}', ['host'], 1, 10min)
 FILTER flag IS NULL
 EMIT host USING mongo_persist('front', 'unknowns')
 ;
