@@ -15,3 +15,5 @@ BEGIN GROUP BY hotelId
   EMIT hotelId, status, count USING mongo_persist('demo', 'output2_2', ['hotelId', 'status'])
 END GROUP
 ;
+SUBMIT TOPOLOGY demo2
+;

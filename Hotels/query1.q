@@ -4,3 +4,5 @@ BEGIN GROUP BY status
 END GROUP
 EMIT status, count USING mongo_persist('demo', 'output1', ['status'])
 ;
+SUBMIT TOPOLOGY demo1
+;

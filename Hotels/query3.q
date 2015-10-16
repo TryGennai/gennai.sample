@@ -17,3 +17,5 @@ BEGIN GROUP BY hotelId
   EMIT * USING mongo_persist('demo', 'output3_2', ['hotelId', 'status'])
 END GROUP
 ;
+SUBMIT TOPOLOGY demo3
+;

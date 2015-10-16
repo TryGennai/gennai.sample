@@ -23,3 +23,5 @@ EMIT * USING mongo_persist('demo', 'output4_2', ['hotelId', 'status'])
 FROM s2
 EMIT * USING kafka_emit('demo4')
 ;
+SUBMIT TOPOLOGY demo4
+;
